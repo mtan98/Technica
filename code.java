@@ -1,123 +1,59 @@
-package techinca;
-
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class FinancialWhatIfs {
-	public static Scanner kb = new Scanner(System.in);
-	public static double promptUser(String prompt, int type) {
-		//type=1 for inputs that are currency
-		//type=2 for choices being one or two
-		System.out.println(prompt);
-		if(type==1) {
-			boolean state = false;
-			while (state==false) {
-				String inputStr = kb.nextLine();
-				try {
-					int index = inputStr.indexOf("$");
-					double input = Double.parseDouble(inputStr.substring(index+1));
-					state=true;
-					return input;
-				}
-				catch(InputMismatchException e) {
-					System.out.println("You did not enter a vaild input");
-					
-				}
-			}
-		}
-		else if(type ==2) {
-			boolean state = false;
-			while (state==false) {
-				String inputStr = kb.nextLine();
-				try {
-					double input = Double.parseDouble(inputStr);
-					if(input==1.0||input==2.0) {
-						state=true;
-						return input;
-					}
-					
-				}
-				catch(InputMismatchException e) {
-					System.out.println("You did not enter a vaild input. You can enter either 1 or 2");
-					
-				}
-			}
-			
-		}
-		return-1.0;
-		
-	}
-	
-	public static ArrayList getCategories() {
-		String [] categories= new String[] {"housing","children","pets","healthcare","taxes","other","savings"};
-		System.out.println("Here are the categories that we will use in the simulation: ");
-		ArrayList<String> subjects = new ArrayList<String>();
-		for(int i= 0; i<categories.length; i++) {
-			subjects.add(categories[i]);
-			System.out.println(categories[i]);
-		}
-		int choice =(int) promptUser("Would you like to add a category? /n Press 1 if you would like to and 2 if you do not want to",2);
-		if(choice==1)
-			boolean done = false;
-			do {
-				System.out.println("Enter the category you want to add. Type DONE when you are done adding categories");
-				String addCat=kb.nextLine();
-				if(addCat.equals("DONE")==false) {
-					subjects.add(addCat);
-				}
-				else {
-					done=true;
-				}
-			}while(done!=true);
-		return subjects;		
-				
-	}
-	public static void simulation(ArrayList categories, ArrayList costs, ) {
-		
-	}
-	public static ArrayList getRecommended(ArrayList categories) {
-		S
-		ArrayList<Double> recommended = new ArrayList<Double>();
-		
-		recommmended.add()
-		
-	}
-	public static ArrayList getCosts(ArrayList categories,ArrayList recommended) {
-		ArrayList<Double>costs=new ArrayList();
-		double income= promptUser("Please enter your income: ",1);
-		double advised = Double.parseDouble(recommended.get(i))*income;
-		for (int i=0;i<=categories.length;i++) {
-			double amount = promptUser("How much do you plan on spending on "+ categories.get(i),1);
-			System.out.println("The average person with your income spends $"+ advised +" annually on "+category.get(i));
-			if(amount<advised) {
-				double difference = advised-amount;
-				System.out.println("You spent $"+ "difference less that what is recommended /n Make sure that you budget enough of your ");
-				
-			}
-			else if()
-			
-			
-		}
-		return costs;
-	}
+public class FinancialAwareness {
 
+	public static Scanner kb = new Scanner(System.in);
+			
+			
+	public static double promptUser(String prompt) {
+		System.out.println(prompt);
+		
+		boolean state = false;
+		double input = 0.0;
+		while (state==false) {
+			String inputStr = kb.nextLine();
+			
+			try {
+				try {
+					int index =inputStr.indexOf("$");
+					inputStr=inputStr.substring(index+1);
+				}
+				catch(NumberFormatException e) {
 					
+				}
 				
+				input = input + Double.parseDouble(inputStr.substring(0));
+				state = true;
+			}
+			catch(InputMismatchException e) {
+				System.out.println("You did not enter a vaild input");
+			}
+		}
+		return input;
+		
+		
+		
+	}
 
 
 	public static void main(String[] args) {
-		System.out.println("Welcome to Financial Whatifs /nPlease give us some info to start");
-		ArrayList categories =getCategories();
-		ArrayList recommended = getRecommended();
-		
-		
-		
+		String[] categories = {"housing","transportation","food","debt payments","personal & discretory costs","savings","utilites","clothing","medical costs"};
+		double[] percent = {35,17.5,15,10,7.5,7.5,5,4,3};
+		System.out.println("Welcome to Financial Awareness.");
+		System.out.println("Please give us some info to start");
+		double salary = promptUser("What is your annual net income? ");
+		double[] spending = new double[categories.length];
+		for(int i = 0; i < categories.length; i++) {
+			spending[i] = promptUser("How much money do you spend on "+categories[i]+" each year?");
+		}
+		System.out.println("Here is your financial report:");
+		double recomendation = 0.0;
+		for(int i = 0; i < categories.length; i++) {
+			recomendation = salary * (percent[i]/100);
+			System.out.println("You plan on spending $"+spending[i]+" on "+categories[i]+" each year. /tWe recommend that you spend around $"+recomendation+" on "+categories[i]+" each year.");
+		} 
 	}
 
 }
-/*for(int i = 0; i < categories.length; i++) {
-			System.out.println("Percent of your salary spent on "+categories[i]+":");
-			percent = (int)((spending[i]/salary)*100);
-			System.out.println(percent);
-		}*/
+
